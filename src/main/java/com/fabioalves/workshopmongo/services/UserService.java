@@ -7,6 +7,7 @@ import com.fabioalves.workshopmongo.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -30,6 +31,12 @@ public class UserService {
     @Transactional
     public User insert (User obj){
         return repository.insert(obj);
+    }
+
+    @Transactional
+    public void deleteById (@PathVariable String id){
+        findById(id);
+        repository.deleteById(id);
     }
 
     public User fromDTO (UserDTO objDTO){
