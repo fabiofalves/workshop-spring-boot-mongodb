@@ -8,15 +8,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UserDTO {
+public class AuthorDTO {
 
     private String id;
     private String name;
-    private String email;
 
-    public UserDTO (User obj){
+    public AuthorDTO (User obj){
         id = obj.getId();
         name = obj.getName();
-        email = obj.getEmail();
     }
 }

@@ -1,5 +1,6 @@
 package com.fabioalves.workshopmongo.domain;
 
+import com.fabioalves.workshopmongo.dto.AuthorDTO;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -24,5 +25,5 @@ public class Post {
     private String title;
     private String body;
 
-    private User author;
+    private AuthorDTO author;
 }
