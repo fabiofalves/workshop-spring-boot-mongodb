@@ -17,14 +17,13 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
-    public List<UserDTO> findAll(){
-        return repository.findAll().stream().map(UserDTO::new).toList();
+    public List<User> findAll(){
+        return repository.findAll();
     }
 
-    public UserDTO findById(String id){
+    public User findById(String id){
         return repository
                 .findById(id)
-                .map(UserDTO::new)
                 .orElseThrow(() -> new ObjectNotFoundException("Object not found"));
     }
 
@@ -39,6 +38,7 @@ public class UserService {
         repository.deleteById(id);
     }
 
+    @Transactional
     public User update (User obj){
         User newObj = repository.findById(obj.getId()).get();
         updateData(newObj, obj);
@@ -51,6 +51,6 @@ public class UserService {
     }
 
     public User fromDTO (UserDTO objDTO){
-        return new User (null, objDTO.getName(), objDTO.getEmail());
+        return new User (objDTO.getId(), objDTO.getName(), objDTO.getEmail());
     }
 }

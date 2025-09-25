@@ -1,5 +1,6 @@
 package com.fabioalves.workshopmongo.resources;
 
+import com.fabioalves.workshopmongo.domain.Post;
 import com.fabioalves.workshopmongo.domain.User;
 import com.fabioalves.workshopmongo.dto.UserDTO;
 import com.fabioalves.workshopmongo.services.UserService;
@@ -28,12 +29,12 @@ public class UserResource {
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> findAll(){
-        return ResponseEntity.ok(new ArrayList<>(service.findAll()));
+        return ResponseEntity.ok(new ArrayList<>(service.findAll().stream().map(UserDTO::new).toList()));
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable String id){
-        return ResponseEntity.ok(service.findById(id));
+        return ResponseEntity.ok(new UserDTO(service.findById(id)));
     }
 
     @PostMapping
@@ -56,5 +57,10 @@ public class UserResource {
         obj.setId(id);
         obj = service.update(obj);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts (@PathVariable String id){
+        return ResponseEntity.ok().body(service.findById(id).getPosts());
     }
 }
